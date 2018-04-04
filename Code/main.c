@@ -21,9 +21,9 @@ int main()
     p =localtime(&timep);
 
 	/*
-	** ´Ëº¯Êı»ñµÃµÄtm½á¹¹ÌåµÄÊ±¼ä£¬ÊÇÒÑ¾­½øĞĞ¹ıÊ±Çø×ª»¯Îª±¾µØÊ±¼ä
+	** æ­¤å‡½æ•°è·å¾—çš„tmç»“æ„ä½“çš„æ—¶é—´ï¼Œæ˜¯å·²ç»è¿›è¡Œè¿‡æ—¶åŒºè½¬åŒ–ä¸ºæœ¬åœ°æ—¶é—´
     ** p = gmtime(&timep);
-	** °ÑÈÕÆÚºÍÊ±¼ä×ª»»Îª¸ñÁÖÍşÖÎ(GMT)Ê±¼äµÄº¯Êı
+	** æŠŠæ—¥æœŸå’Œæ—¶é—´è½¬æ¢ä¸ºæ ¼æ—å¨æ²»(GMT)æ—¶é—´çš„å‡½æ•°
 	*/
 	printf("\nNow is:\n");
     printf("Year:\t%d\t", 1900+p->tm_year);
@@ -35,8 +35,8 @@ int main()
     printf("Second:\t%d\t",  p->tm_sec);
     putchar('\n');
     printf("Weekday:%d\t", p->tm_wday);
-    printf("Days:\t%d\t", p->tm_yday);//ÕâÒ»ÄêµÄµÚ¼¸Ìì
-    printf("Isdst:\t%d\t", p->tm_isdst);//ÏÄÁîÊ±
+    printf("Days:\t%d\t", p->tm_yday);//è¿™ä¸€å¹´çš„ç¬¬å‡ å¤©
+    printf("Isdst:\t%d\t", p->tm_isdst);//å¤ä»¤æ—¶
     putchar('\n');
     spacesmall();
     line();
@@ -63,7 +63,7 @@ int main()
         }
     last.day=p->tm_yday;
         if(last.year>0){
-            last.day+=last.year*365;//ÒıÈë±äÁ¿days=365 or days=366£¬·Ö±ğ¼ÆËãÆ½ÄêÈòÄêµÄÌìÊı
+            last.day+=last.year*365;//å¼•å…¥å˜é‡days=365 or days=366ï¼Œåˆ†åˆ«è®¡ç®—å¹³å¹´é—°å¹´çš„å¤©æ•°
         }
     last.hour=(p->tm_hour-love.hour)+last.day*24;
     last.min=(p->tm_min-love.min)+last.hour*24*60;
