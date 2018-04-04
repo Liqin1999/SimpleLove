@@ -1,9 +1,14 @@
-
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
+
 void line()
 {
-    printf("****************************************************************\n");
+    int i;
+    for(i=0;i<40;i++){
+        printf("*");delay();
+    }
+    putchar('\n');
 }
 void spacebig()
 {
@@ -13,6 +18,40 @@ void spacesmall()
 {
     printf("\n\n");
 }
+void delay()
+{
+    int i,j,k,t=300;
+    for(i=0;i<t;i++){
+        for(j=0;j<t;j++){
+            for(k=0;k<t;k++){
+                //null
+            }
+        }
+    }
+}
+void weekday(int temp)
+{
+    switch(temp){
+        case 0:printf("\tÖÜÈÕ/Sunday");break;
+        case 1:printf("\tÖÜÒ»/Monday");break;
+        case 2:printf("\tÖÜ¶þ/Tuesday");break;
+        case 3:printf("\tÖÜÈý/Wednesday");break;
+        case 4:printf("\tÖÜËÄ/Thursday");break;
+        case 5:printf("\tÖÜÎå/Friday");break;
+        case 6:printf("\tÖÜÁù/Saturday");break;
+    }
+}
+int yeartype(int a)//ÅÐ¶ÏÊÇ·ñÈòÄê£¬·µ»ØÖµÎªÒ»ÄêÖÐµÄÌìÊý
+{
+    int n;
+    if( (a%4==0 && a%400==0)||a%400==0){
+        n=366;
+    }
+    else{
+        n=365;
+    }
+    return n;
+}
 int main()
 {
     time_t timep;
@@ -21,26 +60,27 @@ int main()
     p =localtime(&timep);
 
 	/*
-	** æ­¤å‡½æ•°èŽ·å¾—çš„tmç»“æž„ä½“çš„æ—¶é—´ï¼Œæ˜¯å·²ç»è¿›è¡Œè¿‡æ—¶åŒºè½¬åŒ–ä¸ºæœ¬åœ°æ—¶é—´
+	** ´Ëº¯Êý»ñµÃµÄtm½á¹¹ÌåµÄÊ±¼ä£¬ÊÇÒÑ¾­½øÐÐ¹ýÊ±Çø×ª»¯Îª±¾µØÊ±¼ä
     ** p = gmtime(&timep);
-	** æŠŠæ—¥æœŸå’Œæ—¶é—´è½¬æ¢ä¸ºæ ¼æž—å¨æ²»(GMT)æ—¶é—´çš„å‡½æ•°
+	** °ÑÈÕÆÚºÍÊ±¼ä×ª»»Îª¸ñÁÖÍþÖÎ(GMT)Ê±¼äµÄº¯Êý
 	*/
-	printf("\nNow is:\n");
-    printf("Year:\t%d\t", 1900+p->tm_year);
-    printf("Month:\t%d\t", 1+p->tm_mon);
-    printf("Day:\t%d\t", p->tm_mday);
+	printf("\nNow the time is:\n");delay();
+    printf("\t%dÄê\t", 1900+p->tm_year);delay();
+    printf("%dÔÂ", 1+p->tm_mon);delay();
+    printf("%dÈÕ", p->tm_mday);delay();
+    int d=p->tm_wday;
+    weekday(d);delay();//º¯ÊýÈ·¶¨Êä³öÖÜ¼¸£¬Ó¢ÎÄµ¥´Ê
     putchar('\n');
-    printf("Hour:\t%d\t", p->tm_hour);
-    printf("Minute:\t%d\t", p->tm_min);
-    printf("Second:\t%d\t",  p->tm_sec);
+    printf("\t½ñÄêµÄµÚ %dÌì\t", p->tm_yday);delay();//ÕâÒ»ÄêµÄµÚ¼¸Ìì
     putchar('\n');
-    printf("Weekday:%d\t", p->tm_wday);
-    printf("Days:\t%d\t", p->tm_yday);//è¿™ä¸€å¹´çš„ç¬¬å‡ å¤©
-    printf("Isdst:\t%d\t", p->tm_isdst);//å¤ä»¤æ—¶
-    putchar('\n');
-    spacesmall();
+    printf("\t%dµã", p->tm_hour);delay();
+    printf(" %d·Ö", p->tm_min);delay();
+    printf(" %dÃë",  p->tm_sec);delay();
+    printf("\tIsdst: %d\t", p->tm_isdst);//ÏÄÁîÊ±
+    spacesmall();delay();
     line();
 
+/*Identify struct of our love*/
     struct lovetime{
         int year;
         int mon;
@@ -55,6 +95,7 @@ int main()
     love.hour=0;love.min=10;love.sec=0;
 
 /*Calculating dates*/
+    int days=yeartype(1900+p->tm_year);//ÅÐ¶ÏÊÇ·ñÈòÄê
     struct lovetime last;
     last.year=p->tm_year-love.year+1900;
     last.mon=p->tm_mon-love.mon+1;
@@ -63,7 +104,7 @@ int main()
         }
     last.day=p->tm_yday;
         if(last.year>0){
-            last.day+=last.year*365;//å¼•å…¥å˜é‡days=365 or days=366ï¼Œåˆ†åˆ«è®¡ç®—å¹³å¹´é—°å¹´çš„å¤©æ•°
+            last.day+=last.year*days;//ÒýÈë±äÁ¿days=365 or days=366£¬·Ö±ð¼ÆËãÆ½ÄêÈòÄêµÄÌìÊý
         }
     last.hour=(p->tm_hour-love.hour)+last.day*24;
     last.min=(p->tm_min-love.min)+last.hour*24*60;
@@ -71,18 +112,33 @@ int main()
 
 /*Start nue dog */
     spacesmall();
-    printf("The time we fall in love lasts:\n\n");
+    //printf("The time we fall in love lasts:\n\n");
+    char text[50];
+    int i;
+    strcpy(text,"The time we fall in love lasts:");
+    for(i=0;text[i]!='\0';i++){
+        printf("%c",text[i]);
+        delay();
+    }
+    printf("\n\n");
     if(last.year==0){
         printf("\tLess than 1\tyear\n\n");
     }
     else{
-        printf("\t%d\tyear\n\n",last.year);
+        printf("\t%d\tyears\n\n",last.year);
     }
-    printf("\t%d\t\tmonths\n\n",last.mon);
-    printf("\t%d\t\tdays\n\n",last.day);
-    printf("\t%d\t\thours\n\n",last.hour);
-    printf("\t%d\tseconds\n\n",last.sec);
-    spacebig();
+    delay();
+    printf("\t%d\t\t",last.mon);    delay();delay();
+    printf("months\n\n");           delay();delay();
+    printf("\t%d\t\t",last.day);    delay();delay();
+    printf("days\n\n");             delay();delay();
+    printf("\t%d\t\t",last.hour);   delay();delay();
+    printf("hours\n\n");            delay();delay();
+    printf("\t%d\t",last.sec);      delay();delay();
+    printf("seconds\n\n");          delay();
+    spacesmall();                   delay();
+    line();delay();
+
 	return 0;
 }
 
