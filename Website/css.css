@@ -21,9 +21,6 @@
     display: inline-block;
 }
 
-#pic1 {
-    display: inline-block;
-}
 
 .up {
     text-align: left;
@@ -32,10 +29,6 @@
 .booktitle {
     text-align: right;
     font-style: italic;
-}
-
-#pic2 {
-    display: inline-block;
 }
 
 .body2 {
@@ -48,13 +41,21 @@
     display: inline-block;
 }
 
+#pic1 {
+    display: inline-block;
+    width: 360px;
+}
+
+#pic2 {
+    display: inline-block;
+    width: 360px;
+}
+
 #pic3 {
     display: inline-block;
+    width: 360px;
 }
 
-.pic{
-
-}
 .mid {
     background-color: pink;
     margin: auto;
